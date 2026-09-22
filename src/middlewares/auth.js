@@ -1,12 +1,8 @@
 import jwt from "../utils/jwt.js";
 
 const auth = (req, res, next) => {
-    
-        const cookie = req.headers.cookie;
-          if(!cookie)
-            return   res.status(401).send("User not authenticated.");
-        
-        const token = cookie.split("=")[1];
+
+        const token = req.cookies?.authToken;
 
         if(!token)
          return   res.status(401).send("User not authenticated.");

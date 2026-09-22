@@ -1,5 +1,7 @@
 import express from "express";
 import multer from "multer";
+import cors from "cors";
+import cookieParser from "cookie-parser";
 import config from "./config/config.js";
 import productRoute from "./routes/product.route.js";
 import userRoute from "./routes/user.route.js";
@@ -17,6 +19,15 @@ const app = express();
 connectDB();
  connectCloudinary();
 
+// Allow the frontend (a different origin/port) to send/receive the auth cookie.
+app.use(
+  cors({
+    origin: config.frontendUrl,
+    credentials: true,
+  })
+);
+
+app.use(cookieParser());
 // app.use(express.json());
 app.use(bodyParser.json());
 app.use(logger);
@@ -37,28 +48,8 @@ app.use("/api/products",upload.array("images", 5), productRoute);
 app.use("/api/users",auth, upload.single("image"),  userRoute);
 app.use("/api/auth",authRoute);
 app.use("/api/orders", auth, orderRoute);
-// app.get("/product", async(req, res)=> {
-//     const products = await fs.readFile("src/data/products.json", "utf-8");
-
-//     res.json(JSON.parse(products));
-
-// });
-
-// app.get("/product/first", async(req, res)=> {
-//     const products = await fs.readFile("src/data/products.json", "utf-8");
-
-//     const firstProduct = JSON.parse(products)[0];
-//     res.json(firstProduct);
-
-// });
-
 
 app.listen(config.port, () => {
 console.log(`Server is running at port ${config.port}...`);
 
 });
-
-
-
-
-

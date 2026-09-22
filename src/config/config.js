@@ -4,6 +4,7 @@ dotenv.config();
 
 const config = {
   appUrl: process.env.APP_URL || "",
+  frontendUrl: process.env.FRONTEND_URL || "http://localhost:3000",
   jwtSecret: process.env.JWT_SECRET || "",
   mongodbUrl: process.env.MONGODB_URL || "",
   port: process.env.PORT || "",
