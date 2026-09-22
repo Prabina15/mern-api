@@ -17,6 +17,7 @@ const upload = multer({storage: multer.memoryStorage()});
 
 const app = express();
 connectDB();
+console.log("NODE_ENV is:", process.env.NODE_ENV);
  connectCloudinary();
 
 // Allow the frontend (a different origin/port) to send/receive the auth cookie.
