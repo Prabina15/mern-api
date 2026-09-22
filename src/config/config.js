@@ -7,6 +7,7 @@ const config = {
   frontendUrl: process.env.FRONTEND_URL || "http://localhost:3000",
   jwtSecret: process.env.JWT_SECRET || "",
   mongodbUrl: process.env.MONGODB_URL || "",
+  isProduction: process.env.NODE_ENV === "production",
   port: process.env.PORT || "",
   cloudinary: {
     cloudName: process.env.CLOUDINARY_CLOUD_NAME || "",
