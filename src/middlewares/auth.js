@@ -2,8 +2,18 @@ import jwt from "../utils/jwt.js";
 
 const auth = (req, res, next) => {
 
-        const token = req.cookies?.authToken;
+   const authHeader = req.headers.authorization;
 
+   let token;
+
+   if (authHeader && authHeader.startsWith("Bearer ")) {
+        token = authHeader.substring(7);
+   } else {
+        const cookie  = req.headers.cookie;
+        if(cookie) return res.status(401).send("User not authenticated.");
+
+        token = cookie.split("=")[1];
+   }
         if(!token)
          return   res.status(401).send("User not authenticated.");
          
