@@ -1,0 +1,1 @@
+export const PRODUCT_DESCRIPTION_PROMPT = `Create a detailes product description for my ecooerce website. Follow these details: Product Name: %s, Category: %s, Brand: %s. Create the description in markdown format. Ignore extra messages, don't use enter ascii(\n).but please provide proper formatting with headings paragraphs and bullet points.`;
