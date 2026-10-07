@@ -28,8 +28,6 @@ const createProduct = async(req, res) => {
 
      const product = await productService.createProduct(req.body, req.files, userId);
      res.json(product);
-
-    res.json(uploadedFiles);
    }catch(error) {
     res.status(400).json(error.message);
    }

@@ -2,6 +2,7 @@ import fs from "fs/promises";
 import Product from "../models/Product.js";
 import uploadFile from "../utils/fileUploader.js";
 import { PRODUCT_DESCRIPTION_PROMPT } from "../utils/prompt.js";
+import promptAI from "../utils/ai.js";
 const getAllProducts = async (query) => {
    const sort = query.sort ? JSON.parse(query.sort) : {};
    const limit = query.limit ?? 10;
@@ -35,7 +36,15 @@ const createProduct = async (data, files,  userId) => {
 
    const promptMessage = PRODUCT_DESCRIPTION_PROMPT.replace("%s", data.name).replace("%s", data.category).replace("%s", data.brand);
 
-   const description = data.description ?? (await promptAI(promptMessage));
+   let description = data.description;
+   if (!description) {
+     try {
+       description = await promptAI(promptMessage);
+     } catch (error) {
+       console.error("Failed to generate AI description, falling back to default:", error.message);
+       description = `${data.name} - ${data.brand || ''} (${data.category || ''})`;
+     }
+   }
    
   return await Product.create({ 
    ...data,
