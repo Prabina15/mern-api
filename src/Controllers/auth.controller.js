@@ -11,8 +11,8 @@ import config from "../config/config.js";
 const authCookieOptions = {
   httpOnly: true,
   maxAge: 86400 * 1000,
-  secure: config.isProduction,
-  sameSite: config.isProduction ? "none" : "lax",
+  secure: true,
+  sameSite: "none",
 };
 
 const login = async (req, res)=>{
