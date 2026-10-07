@@ -3,7 +3,11 @@ import config from '../config/config.js';
 
 const ai = new GoogleGenAI({ apiKey: config.geminiApiKey });
 
-const MODELS = ['gemini-3.8-flash', 'gemini-2.5-pro', 'gemini-3.8-pro', 'gemini-2.5-flash-lite'];
+const MODELS = [
+  'gemini-3.5-flash-lite',
+  'gemini-3.8-flash',
+  'gemini-3.1-pro-preview',
+];
 
 const promptAI = async (promptMessage) => {
   let lastError;
