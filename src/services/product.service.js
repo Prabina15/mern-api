@@ -64,8 +64,9 @@ const createProduct = async (data, files,  userId) => {
 
     return await Product.findByIdAndUpdate(id, updateData,  {returnDocument: "after"});
  };
- const deleteProduct = async (id)=>{
-    await Product.findByIdAndDelete(id);
+ const deleteProduct = async (id, userId, isAdmin = false)=>{
+    const filter = isAdmin ? {_id: id} : {_id: id, createdBy: userId};
+    return await Product.findOneAndDelete(filter);
  };
 
  const getBrands = async()=>{

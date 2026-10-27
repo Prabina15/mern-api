@@ -1,4 +1,5 @@
 import productService from "../services/product.service.js";
+import { ROLE_ADMIN, ROLE_SUPER_ADMIN } from "../constants/roles.js";
 
 
 const getAllProducts = async(req, res)=> {
@@ -45,10 +46,16 @@ const updateProduct = async(req, res) => {
 };
 const deleteProduct = async(req, res) => {
     const id = req.params.id;
-    const input = req.body;
+    const userId = req.user._id;
+    const userRoles = req.user.roles || req.user.role || [];
+    const roles = Array.isArray(userRoles) ? userRoles : [userRoles];
+    const isAdmin = roles.includes(ROLE_ADMIN) || roles.includes(ROLE_SUPER_ADMIN);
 
    try{
-     
+     const product = await productService.deleteProduct(id, userId, isAdmin);
+
+     if (!product) return res.status(404).json({message: "Product not found"});
+
      res.json({
         message:"Product deleted successfully."
      });

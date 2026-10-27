@@ -31,9 +31,8 @@ router.put("/:id",
      productController.updateProduct);
 
 router.delete("/:id",
-    auth,roleBasedAuth(ROLE_ADMIN),
+    auth,roleBasedAuth(ROLE_ADMIN, ROLE_MERCHANT),
      productController.deleteProduct);
 
 
 export default router;
-
